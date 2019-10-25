@@ -80,11 +80,14 @@ const GameBoard = () => {
 
   const allShipsSunk = () => ships.every((ship) => ship.isSunk());
 
+  const alreadyShotPositions = () => [...invalidPositions, ...missedShotsPositions];
+
   return {
     ships,
     placeShip,
     allShipsSunk,
     receiveAttack,
+    alreadyShotPositions,
     missedShotsPositions,
   };
 };
