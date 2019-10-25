@@ -3,7 +3,9 @@ import Ship from './ship.js';
 
 const GameBoard = () => {
   const ships = [];
+  const shipsPositions = {};
   const invalidPositions = [];
+  const missedShotsPositions = [];
 
   const getNeighbours = (position) => {
     const neighbours = [];
@@ -21,15 +23,14 @@ const GameBoard = () => {
     invalidPositions.push(..._.flatten(neighbours));
   };
 
-  const isInvalid = (pos) => pos.some(
-    (position) => invalidPositions.includes(position),
-  );
+  const isInvalid = (pos) => pos.some((position) => invalidPositions.includes(position));
 
   const notSequential = (positions) => {
     const sorted = positions.sort();
     const spread = Math.max(...sorted) - Math.min(...sorted);
-    return !(spread === positions.length - 1
-      || spread === (positions.length - 1) * 10);
+    return !(
+      spread === positions.length - 1 || spread === (positions.length - 1) * 10
+    );
   };
 
   const outOfBound = (positions) => positions.some((pos) => pos < 0 || pos > 99);
@@ -38,7 +39,7 @@ const GameBoard = () => {
     const leftColumnElements = positions.filter(
       (position) => position % 10 === 9,
     );
-    if (leftColumnElements.length === 0) return false;
+    if (leftColumnElements.length !== 1) return false;
     if (leftColumnElements[0] < Math.max(...positions)) return true;
     return false;
   };
@@ -47,6 +48,7 @@ const GameBoard = () => {
     if (notSequential(positions)) return true;
     if (outOfBound(positions)) return true;
     if (crossRows(positions)) return true;
+
     return false;
   };
 
@@ -54,15 +56,36 @@ const GameBoard = () => {
     if (isInvalid(positions)) return false;
     if (notPlaceable(positions)) return false;
 
-    ships.push(Ship(positions));
+    const ship = Ship(positions);
+    ships.push(ship);
+    positions.forEach((position) => {
+      shipsPositions[position] = ship;
+    });
     storeInvalid(positions);
 
     return ships;
   };
 
+  const receiveAttack = (position) => {
+    const shipAtPosition = shipsPositions[position];
+
+    if (shipAtPosition) {
+      return shipAtPosition.hit(position);
+    }
+
+    if (missedShotsPositions.includes(position)) return false;
+    missedShotsPositions.push(position);
+    return true;
+  };
+
+  const allShipsSunk = () => ships.every((ship) => ship.isSunk());
+
   return {
-    placeShip,
     ships,
+    placeShip,
+    allShipsSunk,
+    receiveAttack,
+    missedShotsPositions,
   };
 };
 
