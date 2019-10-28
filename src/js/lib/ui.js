@@ -23,9 +23,18 @@ const UI = (() => {
     });
   };
 
+  const gameOver = ({ winner }) => {
+    if (winner === 'Human') {
+      alert('Congratulation! You won!');
+    } else {
+      alert('Sorry! You lost!');
+    }
+  };
+
   return {
     generateBoard,
     renderShips,
+    gameOver,
   };
 })();
 

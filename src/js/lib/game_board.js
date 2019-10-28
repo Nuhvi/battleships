@@ -70,12 +70,14 @@ const GameBoard = () => {
     const shipAtPosition = shipsPositions[position];
 
     if (shipAtPosition) {
-      return shipAtPosition.hit(position);
+      if (shipAtPosition.hit(position)) return shipAtPosition;
+      return 'invalid';
     }
 
-    if (missedShotsPositions.includes(position)) return false;
+    if (missedShotsPositions.includes(position)) return 'invalid';
     missedShotsPositions.push(position);
-    return true;
+
+    return 'miss';
   };
 
   const allShipsSunk = () => ships.every((ship) => ship.isSunk());

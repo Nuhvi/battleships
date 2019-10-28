@@ -76,12 +76,21 @@ describe(('#receiveAttack()'), () => {
     expect(board.ships[0].hits).toContain(3);
   });
 
-  it('returns false if the position was shot before!', () => {
-    board.receiveAttack(4);
+  it('returns invalid if the position was shot before!', () => {
     board.receiveAttack(3);
 
-    expect(board.receiveAttack(4)).toBeFalsy();
-    expect(board.receiveAttack(3)).toBeFalsy();
+    expect(board.receiveAttack(3)).toBe('invalid');
+  });
+
+  it('returns the ship object if the position was a successful hit!', () => {
+    const feedback = board.receiveAttack(3);
+
+    expect(feedback.length).toEqual(4);
+    expect(feedback.positions).toEqual([0, 1, 2, 3]);
+  });
+
+  it('returns miss if the position is not occupied by a ship', () => {
+    expect(board.receiveAttack(4)).toBe('miss');
   });
 });
 

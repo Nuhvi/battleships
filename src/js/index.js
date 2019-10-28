@@ -43,8 +43,22 @@ const eventListener = () => {
 
   const handlerClick = (e) => {
     const id = e.target.getAttribute('data-id');
-    console.log(`box ${id} clicked!`);
-    // humanWaters.receiveAttack(Number(id));
+    const feedback = computerWaters.receiveAttack(Number(id));
+
+    if (typeof feedback === 'object') {
+      if (feedback.isSunk()) {
+        feedback.positions.forEach((position) => {
+          root.querySelector(`[data-id="${position}"]`).classList.add('sunk');
+        });
+      }
+      root.querySelector(`[data-id="${id}"]`).classList.add('hit');
+    } else if (feedback === 'miss') {
+      root.querySelector(`[data-id="${id}"]`).classList.add(feedback);
+    }
+
+    // Check game won?
+    if (humanWaters.allShipsSunk()) UI.gameOver({ winner: 'Computer' });
+    if (computerWaters.allShipsSunk()) UI.gameOver({ winner: 'Human' });
   };
 
   boxes.forEach((box) => {
