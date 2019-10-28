@@ -14,8 +14,18 @@ const UI = (() => {
     computer.innerHTML = boxes;
   };
 
+  const renderShips = ({ id, ships }) => {
+    const root = document.querySelector(`#${id}`);
+
+    _.flatten(ships).forEach((position) => {
+      const shipBody = root.querySelector(`[data-id="${position}"]`);
+      shipBody.classList.add('ship');
+    });
+  };
+
   return {
     generateBoard,
+    renderShips,
   };
 })();
 
