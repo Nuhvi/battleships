@@ -24,7 +24,7 @@ const UI = (() => {
   };
 
   const gameOver = ({ winner }) => {
-    if (winner === 'Human') {
+    if (winner === 'human') {
       alert('Congratulation! You won!');
     } else {
       alert('Sorry! You lost!');

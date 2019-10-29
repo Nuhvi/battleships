@@ -3,6 +3,7 @@ import Ship from './ship.js';
 
 const GameBoard = () => {
   const ships = [];
+  const goodHits = [];
   const shipsPositions = {};
   const invalidPositions = [];
   const missedShotsPositions = [];
@@ -70,7 +71,11 @@ const GameBoard = () => {
     const shipAtPosition = shipsPositions[position];
 
     if (shipAtPosition) {
-      if (shipAtPosition.hit(position)) return shipAtPosition;
+      if (shipAtPosition.hit(position)) {
+        goodHits.push(position);
+        return shipAtPosition;
+      }
+
       return 'invalid';
     }
 
@@ -82,7 +87,7 @@ const GameBoard = () => {
 
   const allShipsSunk = () => ships.every((ship) => ship.isSunk());
 
-  const alreadyShotPositions = () => [...invalidPositions, ...missedShotsPositions];
+  const alreadyShotPositions = () => [...goodHits, ...missedShotsPositions];
 
   return {
     ships,
