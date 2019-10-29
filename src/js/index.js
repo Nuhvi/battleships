@@ -11,34 +11,29 @@ const humanWaters = GameBoard();
 const computerWaters = GameBoard();
 
 const humanShips = [
-  [1, 2, 3, 4],
-  [17, 27, 37, 47, 57],
+  [15, 16, 17, 18, 19],
+  [48, 58, 68, 78, 88],
   [22, 23, 24, 25],
-  [31, 32, 33, 34, 35],
-  [52, 53, 54, 55],
-  [70, 71, 72, 73],
-  [76, 77, 78, 79],
-  [9, 19],
+  [60, 61, 62, 63],
+  [31, 32, 33, 34],
   [97, 98, 99],
-  [90],
-  [93],
-  [95],
-  [30],
-  [50],
-  [49],
+  [1, 2, 3, 4],
+  [80, 90],
+  [75],
+  [55],
 ];
 
 const computerShips = [
-  [1, 2, 3, 4],
   [17, 27, 37, 47, 57],
-  [22, 23, 24, 25],
   [31, 32, 33, 34, 35],
-  [52, 53, 54, 55],
-  [60, 61, 62, 63],
+  [22, 23, 24, 25],
+  [5, 6, 7, 8],
   [76, 77, 78, 79],
+  [82, 83, 84],
+  [45, 46, 47],
   [9, 19],
-  [90],
-  [97, 98, 99],
+  [11],
+  [39],
 ];
 
 computerShips.forEach((ship) => {
@@ -50,7 +45,6 @@ humanShips.forEach((ship) => {
 });
 
 UI.renderShips({ id: 'human', ships: humanWaters.ships.map((ship) => ship.positions) });
-// UI.renderShips({ id: 'computer', ships: computerWaters.ships.map((ship) => ship.positions) });
 
 const processPlayFeedback = ({ player, position, feedback }) => {
   const id = player === 'human' ? 'computer' : 'human';
