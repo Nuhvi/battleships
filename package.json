@@ -6,8 +6,9 @@
   "scripts": {
     "test": "jest",
     "guard": "jest --watch",
-    "build": "webpack mode --production",
-    "watch": "webpack --watch --mode development"
+    "build": "webpack --mode production",
+    "watch": "webpack --watch --mode development",
+    "start": "live-server ./dist"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
   },
   "dependencies": {
     "6": "0.0.1",
+    "live-server": "^1.2.1",
     "lodash": "^4.17.15"
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import _ from 'lodash';
 
 const UI = (() => {

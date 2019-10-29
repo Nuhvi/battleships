@@ -3,6 +3,7 @@ import UI from './lib/ui';
 import GameBoard from './lib/game_board';
 import AI from './lib/ai';
 
+let gameOver = false;
 UI.generateBoard();
 
 // Place ships
@@ -49,7 +50,7 @@ humanShips.forEach((ship) => {
 });
 
 UI.renderShips({ id: 'human', ships: humanWaters.ships.map((ship) => ship.positions) });
-UI.renderShips({ id: 'computer', ships: computerWaters.ships.map((ship) => ship.positions) });
+// UI.renderShips({ id: 'computer', ships: computerWaters.ships.map((ship) => ship.positions) });
 
 const processPlayFeedback = ({ player, position, feedback }) => {
   const id = player === 'human' ? 'computer' : 'human';
@@ -67,8 +68,14 @@ const processPlayFeedback = ({ player, position, feedback }) => {
   }
 
   // Check game won?
-  if (humanWaters.allShipsSunk()) UI.gameOver({ winner: 'computer' });
-  if (computerWaters.allShipsSunk()) UI.gameOver({ winner: 'human' });
+  if (humanWaters.allShipsSunk()) {
+    gameOver = true;
+    UI.gameOver({ winner: 'computer' });
+  }
+  if (computerWaters.allShipsSunk()) {
+    gameOver = true;
+    UI.gameOver({ winner: 'human' });
+  }
 };
 
 // Add event listeners
@@ -77,6 +84,7 @@ const eventListener = () => {
   const boxes = root.querySelectorAll('div');
 
   const handlerClick = (e) => {
+    if (gameOver) return;
     const position = e.target.getAttribute('data-id');
     const feedback = computerWaters.receiveAttack(Number(position));
 
