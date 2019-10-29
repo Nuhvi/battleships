@@ -77,7 +77,7 @@ const eventListener = () => {
   const root = document.querySelector('#computer');
   const boxes = root.querySelectorAll('div');
 
-  const handlerClick = (e) => {
+  const handleClick = (e) => {
     if (gameOver) return;
     const position = e.target.getAttribute('data-id');
     const feedback = computerWaters.receiveAttack(Number(position));
@@ -101,7 +101,7 @@ const eventListener = () => {
   };
 
   boxes.forEach((box) => {
-    box.addEventListener('click', (e) => handlerClick(e));
+    box.addEventListener('click', (e) => handleClick(e));
   });
 };
 
