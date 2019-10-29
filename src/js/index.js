@@ -86,7 +86,7 @@ const eventListener = () => {
       processPlayFeedback({ player: 'human', position, feedback });
 
       // Pass turn to computer if game not over
-      if (!humanWaters.allShipsSunk()) {
+      if (!humanWaters.allShipsSunk() && feedback === 'miss') {
         let isTurnOver = false;
 
         while (!isTurnOver) {
