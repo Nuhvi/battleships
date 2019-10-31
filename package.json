@@ -1,0 +1,30 @@
+{
+  "name": "battleships",
+  "version": "2.0.0",
+  "description": "BattleShips game implementation with plain JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nazeh/battleships.git"
+  },
+  "keywords": [
+    "js",
+    "javascript",
+    "battleships",
+    "game",
+    "web",
+    "development",
+    "ui",
+    "ux",
+    "webpack"
+  ],
+  "author": "ar nazeh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Nazeh/battleships/issues"
+  },
+  "homepage": "https://github.com/Nazeh/battleships#readme"
+}
