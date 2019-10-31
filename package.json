@@ -3,9 +3,7 @@
   "version": "2.0.0",
   "description": "BattleShips game implementation with plain JS",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Nazeh/battleships.git"
@@ -27,8 +25,9 @@
     "url": "https://github.com/Nazeh/battleships/issues"
   },
   "homepage": "https://github.com/Nazeh/battleships#readme",
-  "dependencies": {},
   "devDependencies": {
-    "eslint": "^6.6.0"
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
   }
 }
