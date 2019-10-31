@@ -26,5 +26,9 @@
   "bugs": {
     "url": "https://github.com/Nazeh/battleships/issues"
   },
-  "homepage": "https://github.com/Nazeh/battleships#readme"
+  "homepage": "https://github.com/Nazeh/battleships#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^6.6.0"
+  }
 }
