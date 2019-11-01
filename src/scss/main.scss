@@ -1,0 +1,53 @@
+$background-color: #262c2c;
+$main-color: #92929283;
+
+body {
+  background-color: $background-color;
+}
+
+main {
+  max-width: 400px;
+  min-height: 100vh;
+  margin: auto;
+
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.board {
+  position: relative;
+  margin: 0;
+  height: 0;
+  padding-top: 100%;
+
+  ul {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    border: 1px solid $main-color;
+  }
+
+  .cell {
+    position: relative;
+    list-style: none;
+    border: 1px dashed $main-color;
+
+    &::after {
+      content: '1';
+      font-size: 0;
+      position: absolute;
+      left: 33%;
+      top: 33%;
+      width: 33%;
+      height: 33%;
+      background-color: $main-color;
+      border-radius: 50%;
+    }
+  }
+}
