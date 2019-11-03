@@ -34,17 +34,17 @@ describe('#receiveAttack()', () => {
     expect(board.grid[4].status).toEqual(1);
   });
 
-  it('returns "Already Shot and Missed!" if the cell was shot before!', () => {
+  it('returns false if the cell was shot before!', () => {
     board.receiveAttack(4);
 
-    expect(board.receiveAttack(4)).toBe('Already Shot and Missed!');
+    expect(board.receiveAttack(4)).toBeFalsy();
     expect(board.grid[4].status).toEqual(1);
   });
 
-  it('returns "Already Hit!" if the cell was shot before!', () => {
+  it('returns false if the cell was shot before!', () => {
     board.receiveAttack(3);
 
-    expect(board.receiveAttack(3)).toBe('Already Hit!');
+    expect(board.receiveAttack(3)).toBeFalsy();
     expect(board.grid[3].status).toEqual(2);
   });
 

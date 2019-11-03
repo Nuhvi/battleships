@@ -20,10 +20,10 @@ const Board = (ships) => {
         grid[cell].status = 2;
         return shipAtCell;
       }
-      return 'Already Hit!';
+      return false;
     }
 
-    if (grid[cell].status === 1) return 'Already Shot and Missed!';
+    if (grid[cell].status === 1) return false;
 
     grid[cell].status = 1;
     return 'Missed!';
