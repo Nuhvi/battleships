@@ -1,17 +1,22 @@
 const Game = (() => {
-  let gameOver;
+  let gameNotOver;
   let UI;
   let playerBoard;
   let computerBoard;
 
-  const injectDependencies = (dependencies) => {
+  const reset = (dependencies) => {
     UI = dependencies.UI;
     computerBoard = dependencies.computerBoard;
     playerBoard = dependencies.playerBoard;
+
+    gameNotOver = true;
   };
 
   const checkWinner = (board) => {
-    if (board.allShipsSunk()) gameOver = true;
+    if (board.allShipsSunk()) {
+      gameNotOver = false;
+      UI.renderWinner('player');
+    }
   };
 
   const checkHit = ({ board, ship }) => {
@@ -31,23 +36,23 @@ const Game = (() => {
     return status;
   };
 
-  const computerPlay = () => {
-    const cell = 19;
-    attack({ cell, board: playerBoard });
-    if (gameOver) return 'Computer';
-  };
-
-  const turn = ({ cell }) => {
-    const validPlayerAttack = attack({ cell, board: computerBoard });
-    if (gameOver) UI.renderWinner('player');
-
-    if (validPlayerAttack && !gameOver) {
-      // computerPlay();
+  const computerPlay = (validPlayerAttack) => {
+    if (validPlayerAttack && gameNotOver) {
+      const cell = Math.floor(Math.random() * 10); // change later
+      attack({ attacker: 'computer', cell, board: playerBoard });
     }
   };
 
+  const turn = ({ cell }) => {
+    const validPlayerAttack = attack(
+      { attacker: 'player', cell, board: computerBoard },
+    );
+
+    computerPlay(validPlayerAttack);
+  };
+
   return {
-    injectDependencies,
+    reset,
     turn,
   };
 })();
