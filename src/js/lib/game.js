@@ -1,4 +1,5 @@
 const Game = (() => {
+  let winner;
   let UI;
   let playerBoard;
   let computerBoard;
@@ -9,13 +10,33 @@ const Game = (() => {
     playerBoard = dependencies.playerBoard;
   };
 
-  const play = ({ cell, board }) => {
-    board.receiveAttack(cell);
-    UI.renderCell(cell);
+  const checkWinner = (board) => {
+    if (board.allShipsSunk()) winner = true;
+  };
+
+  const checkHit = ({ cell, board, status }) => {
+    if (status !== cell) {
+      const ship = status;
+      if (ship.isSunk()) {
+        UI.renderSunkShip(ship);
+        checkWinner(board);
+      }
+    }
+  };
+
+  const attack = ({ cell, board }) => {
+    const status = board.receiveAttack(cell);
+    if (status) {
+      checkHit({ cell, board, status });
+      UI.renderCell({ cell, status });
+    }
+
+    return status;
   };
 
   const turn = ({ cell }) => {
-    play({ cell, board: computerBoard });
+    attack({ cell, board: computerBoard });
+    if (winner) return 'player';
   };
 
   return {

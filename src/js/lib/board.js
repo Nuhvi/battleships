@@ -26,7 +26,7 @@ const Board = (ships) => {
     if (grid[cell].status === 1) return false;
 
     grid[cell].status = 1;
-    return 'Missed!';
+    return cell;
   };
 
   const allShipsSunk = () => ships.every((ship) => ship.isSunk());

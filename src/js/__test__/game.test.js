@@ -13,15 +13,15 @@ const UI = (() => {
   };
 })();
 
+let ships;
 let computerBoard;
 let CBreceiveAttack;
-let ships;
 let UIrenderCell;
 let UIrenderSunkShip;
 
 describe('#turn()', () => {
-  beforeAll(() => {
-    ships = [Ship([0, 1, 2, 3])];
+  beforeEach(() => {
+    ships = [Ship([0, 1, 2, 3]), Ship([10, 11, 12, 13])];
     computerBoard = Board(ships);
     CBreceiveAttack = jest.spyOn(computerBoard, 'receiveAttack');
     UIrenderCell = jest.spyOn(UI, 'renderCell');
@@ -31,20 +31,38 @@ describe('#turn()', () => {
   });
 
   it('calls #recieveAttack() of the computer Board', () => {
-    Game.turn({ cell: 0, computerBoard, UI });
+    Game.turn({ cell: 0 });
     expect(CBreceiveAttack).toHaveBeenCalled();
   });
 
-  it('calls #renderCell() of UI module', () => {
-    Game.turn({ cell: 0, computerBoard, UI });
-    expect(UIrenderCell).toHaveBeenCalled();
+  it('calls #renderCell() of UI module with the cell and the result of board#receiveAttack', () => {
+    Game.turn({ cell: 0 });
+    expect(UIrenderCell).toHaveBeenCalledWith({ cell: 0, status: ships[0] });
+
+    Game.turn({ cell: 4 });
+    expect(UIrenderCell).toHaveBeenCalledWith({ cell: 4, status: 4 });
   });
 
   it('calls #renderSunkShip() of UI module if ship is sunk', () => {
-    _.range(4).forEach((cell) => {
-      Game.turn({ cell, computerBoard, UI });
+    _.range(3).forEach((cell) => {
+      Game.turn({ cell });
+    });
+    expect(UIrenderSunkShip).not.toHaveBeenCalled();
+
+    Game.turn({ cell: 3 });
+    expect(UIrenderSunkShip).toHaveBeenCalledWith(ships[0]);
+  });
+
+  it('returns the winner if the computerBoard ships are all Sunk', () => {
+    _.range(3).forEach((cell) => {
+      Game.turn({ cell });
     });
 
-    expect(UIrenderSunkShip).toHaveBeenCalled();
+    expect(Game.turn({ cell: 3 })).not.toEqual('player');
+
+    _.range(3).forEach((cell) => {
+      Game.turn({ cell: cell + 10 });
+    });
+    expect(Game.turn({ cell: 13 })).toEqual('player');
   });
 });

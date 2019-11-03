@@ -62,8 +62,8 @@ describe('#receiveAttack()', () => {
     expect(board.grid[3].status).toEqual(2);
   });
 
-  it('returns "Missed!" if the cell was not shot before and not occupied by a ship', () => {
-    expect(board.receiveAttack(4)).toEqual('Missed!');
+  it('returns the cell if the cell was not shot before and not occupied by a ship', () => {
+    expect(board.receiveAttack(4)).toEqual(4);
   });
 });
 
