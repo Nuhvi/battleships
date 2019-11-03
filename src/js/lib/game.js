@@ -1,5 +1,5 @@
 const Game = (() => {
-  let winner;
+  let gameOver;
   let UI;
   let playerBoard;
   let computerBoard;
@@ -11,32 +11,39 @@ const Game = (() => {
   };
 
   const checkWinner = (board) => {
-    if (board.allShipsSunk()) winner = true;
+    if (board.allShipsSunk()) gameOver = true;
   };
 
-  const checkHit = ({ cell, board, status }) => {
-    if (status !== cell) {
-      const ship = status;
-      if (ship.isSunk()) {
-        UI.renderSunkShip(ship);
-        checkWinner(board);
-      }
+  const checkHit = ({ board, ship }) => {
+    if (ship && ship.isSunk()) {
+      UI.renderSunkShip(ship);
+      checkWinner(board);
     }
   };
 
   const attack = ({ cell, board }) => {
     const status = board.receiveAttack(cell);
     if (status) {
-      checkHit({ cell, board, status });
+      checkHit({ board, ship: status === cell ? null : status });
       UI.renderCell({ cell, status });
     }
 
     return status;
   };
 
+  const computerPlay = () => {
+    const cell = 19;
+    attack({ cell, board: playerBoard });
+    if (gameOver) return 'Computer';
+  };
+
   const turn = ({ cell }) => {
-    attack({ cell, board: computerBoard });
-    if (winner) return 'player';
+    const validPlayerAttack = attack({ cell, board: computerBoard });
+    if (gameOver) UI.renderWinner('player');
+
+    if (validPlayerAttack && !gameOver) {
+      // computerPlay();
+    }
   };
 
   return {
