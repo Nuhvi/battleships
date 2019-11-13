@@ -3,12 +3,13 @@ const Game = (() => {
   let UI;
   let playerBoard;
   let computerBoard;
+  let computerPickMove;
 
   const reset = (dependencies) => {
     UI = dependencies.UI;
-    computerBoard = dependencies.computerBoard;
     playerBoard = dependencies.playerBoard;
-
+    computerBoard = dependencies.computerBoard;
+    computerPickMove = dependencies.computerPickMove;
     gameNotOver = true;
   };
 
